@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>submarine_drivers</name>
+  <version>1.0.0</version>
+  <description>
+    Modular C++ driver framework for underwater vehicle actuators and sensors.
+    Includes thruster control (PWM, thrust curves, deadband), sensor simulation
+    (IMU, DVL, depth), noise injection for SIL testing, and a 6-DOF EKF-based
+    state estimator.
+  </description>
+  <maintainer email="omtilwar@gmail.com">Om Pratap Tilwar</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>std_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>sensor_msgs</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
