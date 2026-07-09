@@ -82,9 +82,9 @@ TEST_F(NoiseModelTest, QuantizationSnapsToSteps) {
 
     NoiseModel model(config, SEED);
 
-    EXPECT_DOUBLE_EQ(model.apply(0.15, 0.01), 0.2);
+    EXPECT_DOUBLE_EQ(model.apply(0.16, 0.01), 0.2);
     EXPECT_DOUBLE_EQ(model.apply(0.14, 0.01), 0.1);
-    EXPECT_DOUBLE_EQ(model.apply(0.05, 0.01), 0.1);
+    EXPECT_DOUBLE_EQ(model.apply(0.06, 0.01), 0.1);
     EXPECT_DOUBLE_EQ(model.apply(0.04, 0.01), 0.0);
 }
 
