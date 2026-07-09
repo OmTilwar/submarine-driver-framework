@@ -35,7 +35,8 @@ public:
         NoiseModel::Config altitude_noise;
     };
 
-    explicit DvlDriver(const Config& config = Config{});
+    DvlDriver() : DvlDriver(Config{}) {}
+    explicit DvlDriver(const Config& config);
     ~DvlDriver() override = default;
 
     // DriverBase interface

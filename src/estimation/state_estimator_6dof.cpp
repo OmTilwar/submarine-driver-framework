@@ -76,10 +76,15 @@ void StateEstimator6DOF::predict(const ImuReading& imu, double dt_seconds) {
     double ay = imu.acceleration.y - gy_body;
     double az = imu.acceleration.z - gz_body;
 
+    // Coriolis/centripetal terms (omega x v)
+    double cx = state_[Q] * state_[W] - state_[R] * state_[V];
+    double cy = state_[R] * state_[U] - state_[P] * state_[W];
+    double cz = state_[P] * state_[V] - state_[Q] * state_[U];
+
     // Integrate acceleration to get velocity (body frame)
-    state_[U] += ax * dt_seconds;
-    state_[V] += ay * dt_seconds;
-    state_[W] += az * dt_seconds;
+    state_[U] += (ax - cx) * dt_seconds;
+    state_[V] += (ay - cy) * dt_seconds;
+    state_[W] += (az - cz) * dt_seconds;
 
     // --- Position update (velocity integration) ---
     // Rotate body velocity to NED frame

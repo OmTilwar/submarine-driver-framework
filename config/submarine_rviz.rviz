@@ -1,101 +1,211 @@
 Panels:
   - Class: rviz_common/Displays
+    Help Height: 78
     Name: Displays
-    Displays:
-      - Class: rviz_default_plugins/Grid
-        Name: Grid
-        Enabled: true
-        Plane Cell Count: 50
-        Cell Size: 1
-        Color: 60; 60; 60
-        Line Style:
-          Value: Lines
-        Normal Cell Count: 0
-
-      - Class: rviz_default_plugins/RobotModel
-        Name: Submarine Model
-        Enabled: true
-        Description Source: Topic
-        Description Topic:
-          Value: /robot_description
-        TF Prefix: ""
-
-      - Class: rviz_default_plugins/TF
-        Name: TF Frames
-        Enabled: true
-        Show Axes: true
-        Show Names: true
-        Frame Timeout: 15
-        Frames:
-          odom:
-            Enabled: true
-          base_link:
-            Enabled: true
-          imu_link:
-            Enabled: false
-          dvl_link:
-            Enabled: false
-          depth_link:
-            Enabled: false
-
-      - Class: rviz_default_plugins/Pose
-        Name: Estimated Pose
-        Enabled: true
-        Topic:
-          Value: /estimation/pose
-        Shape:
-          Value: Arrow
-        Color: 0; 255; 0
-        Alpha: 1.0
-        Shaft Length: 0.5
-        Head Length: 0.2
-
-      - Class: rviz_default_plugins/Pose
-        Name: Ground Truth
-        Enabled: true
-        Topic:
-          Value: /ground_truth/pose
-        Shape:
-          Value: Arrow
-        Color: 255; 255; 0
-        Alpha: 0.7
-        Shaft Length: 0.5
-        Head Length: 0.2
-
-      - Class: rviz_default_plugins/Path
-        Name: Estimated Path
-        Enabled: true
-        Topic:
-          Value: /estimation/path
-        Color: 0; 255; 0
-        Alpha: 0.8
-        Line Width: 0.03
-
-      - Class: rviz_default_plugins/Path
-        Name: Ground Truth Path
-        Enabled: true
-        Topic:
-          Value: /ground_truth/path
-        Color: 255; 255; 0
-        Alpha: 0.5
-        Line Width: 0.03
-
+    Property Tree Widget:
+      Expanded:
+        - /Global Options1
+      Splitter Ratio: 0.5
+    Tree Height: 500
   - Class: rviz_common/Views
+    Expanded:
+      - /Current View1
     Name: Views
-    Current:
-      Class: rviz_default_plugins/Orbit
-      Distance: 40
-      Focal Point:
-        X: 0
-        Y: 0
-        Z: -20
-      Yaw: 0.5
-      Pitch: 0.5
+    Splitter Ratio: 0.5
 
 Visualization Manager:
+  Class: ""
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Grid
+      Enabled: true
+      Value: true
+      Plane Cell Count: 50
+      Cell Size: 1
+      Color: 60; 60; 60
+      Line Style:
+        Line Width: 0.029999999329447746
+        Value: Lines
+      Normal Cell Count: 0
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Plane: XY
+      Reference Frame: <Fixed Frame>
+
+    - Class: rviz_default_plugins/RobotModel
+      Name: Submarine Model
+      Enabled: true
+      Value: true
+      Description Source: Topic
+      Description Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /robot_description
+      TF Prefix: ""
+      Update Interval: 0
+      Visual Enabled: true
+      Alpha: 1
+
+    - Class: rviz_default_plugins/TF
+      Name: TF Frames
+      Enabled: true
+      Value: true
+      Show Axes: true
+      Show Names: true
+      Frame Timeout: 15
+      Marker Scale: 1
+      Update Interval: 0
+      Frames:
+        All Enabled: false
+        odom:
+          Value: true
+        base_link:
+          Value: true
+        imu_link:
+          Value: false
+        dvl_link:
+          Value: false
+        depth_link:
+          Value: false
+
+    - Class: rviz_default_plugins/Pose
+      Name: Estimated Pose
+      Enabled: true
+      Value: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /estimation/pose
+      Shape:
+        Alpha: 1
+        Axes Length: 1
+        Axes Radius: 0.10000000149011612
+        Color: 0; 255; 0
+        Head Length: 0.20000000298023224
+        Head Radius: 0.10000000149011612
+        Shaft Length: 0.5
+        Shaft Radius: 0.05000000074505806
+        Value: Arrow
+
+    - Class: rviz_default_plugins/Pose
+      Name: Ground Truth
+      Enabled: true
+      Value: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /ground_truth/pose
+      Shape:
+        Alpha: 0.699999988079071
+        Axes Length: 1
+        Axes Radius: 0.10000000149011612
+        Color: 255; 255; 0
+        Head Length: 0.20000000298023224
+        Head Radius: 0.10000000149011612
+        Shaft Length: 0.5
+        Shaft Radius: 0.05000000074505806
+        Value: Arrow
+
+    - Class: rviz_default_plugins/Path
+      Name: Estimated Path
+      Enabled: true
+      Value: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /estimation/path
+      Color: 0; 255; 0
+      Alpha: 0.800000011920929
+      Buffer Length: 1
+      Line Style:
+        Line Width: 0.029999999329447746
+        Value: Lines
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Pose Color: 255; 85; 255
+      Pose Style:
+        Value: None
+
+    - Class: rviz_default_plugins/Path
+      Name: Ground Truth Path
+      Enabled: true
+      Value: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /ground_truth/path
+      Color: 255; 255; 0
+      Alpha: 0.5
+      Buffer Length: 1
+      Line Style:
+        Line Width: 0.029999999329447746
+        Value: Lines
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Pose Color: 255; 85; 255
+      Pose Style:
+        Value: None
+
+  Enabled: true
   Global Options:
-    Fixed Frame: odom
     Background Color: 20; 30; 48
-  Window Geometry:
-    Width: 1920
-    Height: 1080
+    Fixed Frame: odom
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/FocusCamera
+  Value: true
+
+Views:
+  Current:
+    Class: rviz_default_plugins/Orbit
+    Distance: 40
+    Enable Stereo Rendering:
+      Stereo Eye Separation: 0.05999999865889549
+      Stereo Focal Distance: 1
+      Swap Stereo Eyes: false
+      Value: false
+    Focal Point:
+      X: 0
+      Y: 0
+      Z: -20
+    Focal Shape Fixed Size: true
+    Focal Shape Size: 0.05000000074505806
+    Invert Z Axis: false
+    Name: Current View
+    Near Clip Distance: 0.009999999776482582
+    Pitch: 0.5
+    Target Frame: <Fixed Frame>
+    Value: Orbit (rviz_default_plugins)
+    Yaw: 0.5
+  Saved: ~
+
+Window Geometry:
+  Displays:
+    collapsed: false
+  Height: 1080
+  QMainWindow State: 000000ff00000000fd0000000100000000000001560000039efc0200000002fb000000100044006900730070006c006100790073010000003d0000039e000000c900fffffffb0000000a00560069006500770073000000003d0000039e000000a400ffffff00000556000003c20000000400000004000000080000000800000001000000020000000100000002fc0000000100000002000000000000000000000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  Views:
+    collapsed: false
+  Width: 1920

@@ -79,11 +79,13 @@ endif()
 
 # --- ROS2 Nodes (conditional) ---
 if(BUILD_ROS2_NODES)
+    add_compile_definitions(BUILD_ROS2_NODES)
     find_package(ament_cmake REQUIRED)
     find_package(rclcpp REQUIRED)
     find_package(std_msgs REQUIRED)
     find_package(geometry_msgs REQUIRED)
     find_package(sensor_msgs REQUIRED)
+    find_package(nav_msgs REQUIRED)
     find_package(tf2_ros REQUIRED)
 
     # Sensor driver node
@@ -96,13 +98,13 @@ if(BUILD_ROS2_NODES)
     add_executable(state_estimator_node src/nodes/state_estimator_node.cpp)
     target_link_libraries(state_estimator_node submarine_drivers_core)
     ament_target_dependencies(state_estimator_node
-        rclcpp std_msgs geometry_msgs sensor_msgs)
+        rclcpp std_msgs geometry_msgs sensor_msgs nav_msgs)
 
     # Trajectory simulation node
     add_executable(trajectory_sim_node src/nodes/trajectory_sim_node.cpp)
     target_link_libraries(trajectory_sim_node submarine_drivers_core)
     ament_target_dependencies(trajectory_sim_node
-        rclcpp std_msgs geometry_msgs sensor_msgs tf2_ros)
+        rclcpp std_msgs geometry_msgs sensor_msgs nav_msgs tf2_ros)
 
     install(TARGETS sensor_driver_node state_estimator_node trajectory_sim_node
         DESTINATION lib/${PROJECT_NAME})

@@ -22,6 +22,7 @@
 #include <geometry_msgs/msg/twist_stamped.hpp>
 #include <geometry_msgs/msg/pose_stamped.hpp>
 #include <std_msgs/msg/float64.hpp>
+#include <nav_msgs/msg/path.hpp>
 
 #include "submarine_drivers/estimation/state_estimator_6dof.hpp"
 #include "submarine_drivers/core/types.hpp"
@@ -39,6 +40,10 @@ public:
         // Publisher
         pose_pub_ = this->create_publisher<geometry_msgs::msg::PoseStamped>(
             "/estimation/pose", 10);
+        path_pub_ = this->create_publisher<nav_msgs::msg::Path>(
+            "/estimation/path", 10);
+
+        est_path_.header.frame_id = "odom";
 
         // Subscribers
         imu_sub_ = this->create_subscription<sensor_msgs::msg::Imu>(
@@ -122,12 +127,22 @@ private:
         msg.pose.orientation.z = cr * cp * sy - sr * sp * cy;
 
         pose_pub_->publish(msg);
+
+        // Accumulate into path
+        est_path_.header.stamp = msg.header.stamp;
+        est_path_.poses.push_back(msg);
+        if (est_path_.poses.size() > 5000) {
+            est_path_.poses.erase(est_path_.poses.begin());
+        }
+        path_pub_->publish(est_path_);
     }
 
     std::unique_ptr<StateEstimator6DOF> estimator_;
     rclcpp::Time last_imu_time_;
 
     rclcpp::Publisher<geometry_msgs::msg::PoseStamped>::SharedPtr pose_pub_;
+    rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr path_pub_;
+    nav_msgs::msg::Path est_path_;
     rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr imu_sub_;
     rclcpp::Subscription<geometry_msgs::msg::TwistStamped>::SharedPtr dvl_sub_;
     rclcpp::Subscription<std_msgs::msg::Float64>::SharedPtr depth_sub_;

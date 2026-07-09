@@ -43,7 +43,8 @@ public:
         double ambient_temperature{20.0};
     };
 
-    explicit ThrusterDriver(const Config& config = Config{});
+    ThrusterDriver() : ThrusterDriver(Config{}) {}
+    explicit ThrusterDriver(const Config& config);
     ~ThrusterDriver() override = default;
 
     // DriverBase interface

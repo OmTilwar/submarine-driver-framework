@@ -39,7 +39,8 @@ public:
         double gravity{9.80665};
     };
 
-    explicit ImuDriver(const Config& config = Config{});
+    ImuDriver() : ImuDriver(Config{}) {}
+    explicit ImuDriver(const Config& config);
     ~ImuDriver() override = default;
 
     // DriverBase interface

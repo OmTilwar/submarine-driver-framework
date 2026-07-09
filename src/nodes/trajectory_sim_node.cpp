@@ -21,6 +21,7 @@
 #include <geometry_msgs/msg/twist_stamped.hpp>
 #include <geometry_msgs/msg/pose_stamped.hpp>
 #include <std_msgs/msg/float64.hpp>
+#include <nav_msgs/msg/path.hpp>
 #include <tf2_ros/transform_broadcaster.h>
 #include <geometry_msgs/msg/transform_stamped.hpp>
 
@@ -56,6 +57,10 @@ public:
             "/sensors/depth", 10);
         gt_pose_pub_ = this->create_publisher<geometry_msgs::msg::PoseStamped>(
             "/ground_truth/pose", 10);
+        gt_path_pub_ = this->create_publisher<nav_msgs::msg::Path>(
+            "/ground_truth/path", 10);
+
+        gt_path_.header.frame_id = "odom";
 
         // TF broadcaster for RViz
         tf_broadcaster_ = std::make_unique<tf2_ros::TransformBroadcaster>(*this);
@@ -153,6 +158,15 @@ private:
         msg.pose.orientation.z = std::sin(yaw / 2.0);
 
         gt_pose_pub_->publish(msg);
+
+        // Accumulate into path
+        gt_path_.header.stamp = msg.header.stamp;
+        gt_path_.poses.push_back(msg);
+        // Keep path reasonable length
+        if (gt_path_.poses.size() > 5000) {
+            gt_path_.poses.erase(gt_path_.poses.begin());
+        }
+        gt_path_pub_->publish(gt_path_);
     }
 
     void broadcast_tf(double x, double y, double z, double yaw) {
@@ -225,6 +239,8 @@ private:
     rclcpp::Publisher<geometry_msgs::msg::TwistStamped>::SharedPtr dvl_pub_;
     rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr depth_pub_;
     rclcpp::Publisher<geometry_msgs::msg::PoseStamped>::SharedPtr gt_pose_pub_;
+    rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr gt_path_pub_;
+    nav_msgs::msg::Path gt_path_;
 
     // TF
     std::unique_ptr<tf2_ros::TransformBroadcaster> tf_broadcaster_;

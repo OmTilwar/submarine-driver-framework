@@ -40,7 +40,8 @@ public:
         NoiseModel::Config temperature_noise;
     };
 
-    explicit DepthSensorDriver(const Config& config = Config{});
+    DepthSensorDriver() : DepthSensorDriver(Config{}) {}
+    explicit DepthSensorDriver(const Config& config);
     ~DepthSensorDriver() override = default;
 
     // DriverBase interface

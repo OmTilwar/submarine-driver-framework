@@ -61,7 +61,8 @@ public:
         double gravity{9.80665};
     };
 
-    explicit StateEstimator6DOF(const Config& config = Config{});
+    StateEstimator6DOF() : StateEstimator6DOF(Config{}) {}
+    explicit StateEstimator6DOF(const Config& config);
 
     /// Reset state to zero (or specified initial state)
     void reset(const StateVector& initial_state = StateVector{});

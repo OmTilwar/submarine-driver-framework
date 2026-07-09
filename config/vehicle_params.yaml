@@ -1,82 +1,84 @@
 # Vehicle configuration for the submarine driver framework
 # Adjust these parameters for your specific AUV/submarine platform
 
-vehicle:
-  name: "generic_auv"
-  mass_kg: 50.0
-  buoyancy_offset: 0.5  # positive = slightly buoyant
+/**:
+  ros__parameters:
+    vehicle:
+      name: "generic_auv"
+      mass_kg: 50.0
+      buoyancy_offset: 0.5  # positive = slightly buoyant
 
-thrusters:
-  - id: "T0"
-    position: [0.3, 0.15, 0.0]   # [x, y, z] meters from CoM
-    direction: [1.0, 0.0, 0.0]    # thrust direction vector
-    pwm_neutral: 1500
-    pwm_min: 1100
-    pwm_max: 1900
-    deadband_width: 25
-    max_thrust: 50.0
-    max_rpm: 3800
+    thrusters:
+      - id: "T0"
+        position: [0.3, 0.15, 0.0]   # [x, y, z] meters from CoM
+        direction: [1.0, 0.0, 0.0]    # thrust direction vector
+        pwm_neutral: 1500
+        pwm_min: 1100
+        pwm_max: 1900
+        deadband_width: 25
+        max_thrust: 50.0
+        max_rpm: 3800
 
-  - id: "T1"
-    position: [0.3, -0.15, 0.0]
-    direction: [1.0, 0.0, 0.0]
-    pwm_neutral: 1500
-    pwm_min: 1100
-    pwm_max: 1900
-    deadband_width: 25
-    max_thrust: 50.0
-    max_rpm: 3800
+      - id: "T1"
+        position: [0.3, -0.15, 0.0]
+        direction: [1.0, 0.0, 0.0]
+        pwm_neutral: 1500
+        pwm_min: 1100
+        pwm_max: 1900
+        deadband_width: 25
+        max_thrust: 50.0
+        max_rpm: 3800
 
-  - id: "T2"
-    position: [-0.3, 0.15, 0.0]
-    direction: [1.0, 0.0, 0.0]
-    pwm_neutral: 1500
-    pwm_min: 1100
-    pwm_max: 1900
-    deadband_width: 25
-    max_thrust: 50.0
-    max_rpm: 3800
+      - id: "T2"
+        position: [-0.3, 0.15, 0.0]
+        direction: [1.0, 0.0, 0.0]
+        pwm_neutral: 1500
+        pwm_min: 1100
+        pwm_max: 1900
+        deadband_width: 25
+        max_thrust: 50.0
+        max_rpm: 3800
 
-  - id: "T3"
-    position: [-0.3, -0.15, 0.0]
-    direction: [1.0, 0.0, 0.0]
-    pwm_neutral: 1500
-    pwm_min: 1100
-    pwm_max: 1900
-    deadband_width: 25
-    max_thrust: 50.0
-    max_rpm: 3800
+      - id: "T3"
+        position: [-0.3, -0.15, 0.0]
+        direction: [1.0, 0.0, 0.0]
+        pwm_neutral: 1500
+        pwm_min: 1100
+        pwm_max: 1900
+        deadband_width: 25
+        max_thrust: 50.0
+        max_rpm: 3800
 
-sensors:
-  imu:
-    update_rate_hz: 200.0
-    accel_noise:
-      gaussian_stddev: 0.05
-      bias_drift_rate: 0.001
-      bias_drift_max: 0.05
-    gyro_noise:
-      gaussian_stddev: 0.01
-      bias_drift_rate: 0.0005
-      bias_drift_max: 0.02
+    sensors:
+      imu:
+        update_rate_hz: 200.0
+        accel_noise:
+          gaussian_stddev: 0.05
+          bias_drift_rate: 0.001
+          bias_drift_max: 0.05
+        gyro_noise:
+          gaussian_stddev: 0.01
+          bias_drift_rate: 0.0005
+          bias_drift_max: 0.02
 
-  dvl:
-    update_rate_hz: 5.0
-    max_altitude: 200.0
-    min_altitude: 0.3
-    velocity_noise:
-      gaussian_stddev: 0.02
+      dvl:
+        update_rate_hz: 5.0
+        max_altitude: 200.0
+        min_altitude: 0.3
+        velocity_noise:
+          gaussian_stddev: 0.02
 
-  depth_sensor:
-    update_rate_hz: 10.0
-    pressure_noise:
-      gaussian_stddev: 50.0  # Pascals (~0.5cm depth noise)
-    temperature_noise:
-      gaussian_stddev: 0.1   # degrees C
+      depth_sensor:
+        update_rate_hz: 10.0
+        pressure_noise:
+          gaussian_stddev: 50.0  # Pascals (~0.5cm depth noise)
+        temperature_noise:
+          gaussian_stddev: 0.1   # degrees C
 
-state_estimator:
-  position_process_noise: 0.01
-  orientation_process_noise: 0.005
-  velocity_process_noise: 0.1
-  angular_rate_process_noise: 0.05
-  dvl_velocity_noise: 0.02
-  depth_noise: 0.05
+    state_estimator:
+      position_process_noise: 0.01
+      orientation_process_noise: 0.005
+      velocity_process_noise: 0.1
+      angular_rate_process_noise: 0.05
+      dvl_velocity_noise: 0.02
+      depth_noise: 0.05
