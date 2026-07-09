@@ -84,6 +84,7 @@ if(BUILD_ROS2_NODES)
     find_package(std_msgs REQUIRED)
     find_package(geometry_msgs REQUIRED)
     find_package(sensor_msgs REQUIRED)
+    find_package(tf2_ros REQUIRED)
 
     # Sensor driver node
     add_executable(sensor_driver_node src/nodes/sensor_driver_node.cpp)
@@ -97,10 +98,16 @@ if(BUILD_ROS2_NODES)
     ament_target_dependencies(state_estimator_node
         rclcpp std_msgs geometry_msgs sensor_msgs)
 
-    install(TARGETS sensor_driver_node state_estimator_node
+    # Trajectory simulation node
+    add_executable(trajectory_sim_node src/nodes/trajectory_sim_node.cpp)
+    target_link_libraries(trajectory_sim_node submarine_drivers_core)
+    ament_target_dependencies(trajectory_sim_node
+        rclcpp std_msgs geometry_msgs sensor_msgs tf2_ros)
+
+    install(TARGETS sensor_driver_node state_estimator_node trajectory_sim_node
         DESTINATION lib/${PROJECT_NAME})
 
-    install(DIRECTORY launch config
+    install(DIRECTORY launch config urdf
         DESTINATION share/${PROJECT_NAME})
 
     ament_package()

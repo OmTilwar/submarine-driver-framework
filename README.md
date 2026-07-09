@@ -1,5 +1,7 @@
 # Submarine Driver Framework
 
+[![Build & Test](https://github.com/OmTilwar/submarine-driver-framework/actions/workflows/build.yml/badge.svg)](https://github.com/OmTilwar/submarine-driver-framework/actions)
+
 A modular **C++ / ROS2 driver framework** for underwater vehicle actuators and sensors, designed for autonomous submarine development and software-in-the-loop (SIL) testing.
 
 ## Overview
@@ -66,14 +68,57 @@ ctest --output-on-failure
 
 ### With ROS2 (Humble/Iron/Jazzy)
 
+**One-click demo** (Ubuntu 22.04 + ROS2 Humble):
 ```bash
-# From your ROS2 workspace src/
+git clone https://github.com/OmTilwar/submarine-driver-framework.git
+cd submarine-driver-framework
+chmod +x demo_setup.sh
+./demo_setup.sh
+```
+
+This will build, test, and launch the full demo with RViz visualization.
+
+**Manual build:**
+```bash
 cd ~/ros2_ws/src
-ln -s /path/to/submarine-driver-framework .
+git clone https://github.com/OmTilwar/submarine-driver-framework.git
 cd ~/ros2_ws
 colcon build --packages-select submarine_drivers --cmake-args -DBUILD_ROS2_NODES=ON
 source install/setup.bash
-ros2 launch submarine_drivers drivers.launch.py
+```
+
+## Demo
+
+Launch the full demo with trajectory simulation and RViz visualization:
+
+```bash
+# Circle trajectory (default)
+ros2 launch submarine_drivers demo.launch.py
+
+# Figure-8 trajectory
+ros2 launch submarine_drivers demo.launch.py pattern:=figure8
+
+# Straight line
+ros2 launch submarine_drivers demo.launch.py pattern:=straight
+
+# Headless (no RViz)
+ros2 launch submarine_drivers demo.launch.py launch_rviz:=false
+```
+
+**What you'll see in RViz:**
+- 🟢 **Green arrow** — Estimated pose (from the 6-DOF state estimator)
+- 🟡 **Yellow arrow** — Ground truth pose (from trajectory simulation)
+- 🔵 **Submarine model** — URDF visualization with hull, fins, and thrusters
+- The submarine traces a circle at 20m depth with gentle diving oscillations
+
+**ROS2 Topics:**
+```
+/sensors/imu          → sensor_msgs/Imu           (200 Hz)
+/sensors/dvl          → geometry_msgs/TwistStamped (50 Hz)
+/sensors/depth        → std_msgs/Float64          (50 Hz)
+/estimation/pose      → geometry_msgs/PoseStamped  (200 Hz)
+/ground_truth/pose    → geometry_msgs/PoseStamped  (50 Hz)
+/robot_description    → std_msgs/String            (URDF)
 ```
 
 ## Project Structure

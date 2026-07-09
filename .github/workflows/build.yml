@@ -1,0 +1,54 @@
+name: Build & Test
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  # Standalone build (no ROS2) - tests core library
+  standalone:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure CMake
+        run: cmake -S . -B build -DBUILD_TESTING=ON -DBUILD_ROS2_NODES=OFF
+
+      - name: Build
+        run: cmake --build build --config Release -j$(nproc)
+
+      - name: Run Tests
+        working-directory: build
+        run: ctest --build-config Release --output-on-failure
+
+  # ROS2 build - tests full package including nodes
+  ros2-humble:
+    runs-on: ubuntu-22.04
+    container:
+      image: ros:humble
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: src/submarine_drivers
+
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y python3-colcon-common-extensions
+          rosdep update
+          rosdep install --from-paths src --ignore-src -r -y
+
+      - name: Build with colcon
+        run: |
+          source /opt/ros/humble/setup.bash
+          colcon build --packages-select submarine_drivers \
+            --cmake-args -DBUILD_ROS2_NODES=ON -DBUILD_TESTING=ON
+
+      - name: Run Tests
+        run: |
+          source /opt/ros/humble/setup.bash
+          source install/setup.bash
+          colcon test --packages-select submarine_drivers
+          colcon test-result --verbose

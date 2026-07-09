@@ -1,0 +1,152 @@
+<?xml version="1.0"?>
+<robot name="submarine" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Base link: submarine hull (simplified box) -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="2.0 0.5 0.4"/>
+      </geometry>
+      <material name="hull_color">
+        <color rgba="0.2 0.3 0.4 1.0"/>
+      </material>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="2.0 0.5 0.4"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="50.0"/>
+      <inertia ixx="1.04" ixy="0" ixz="0" iyy="16.87" iyz="0" izz="17.71"/>
+    </inertial>
+  </link>
+
+  <!-- Nose cone -->
+  <link name="nose">
+    <visual>
+      <geometry>
+        <sphere radius="0.25"/>
+      </geometry>
+      <material name="nose_color">
+        <color rgba="0.3 0.4 0.5 1.0"/>
+      </material>
+    </visual>
+  </link>
+  <joint name="nose_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="nose"/>
+    <origin xyz="1.0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Tail fin (vertical) -->
+  <link name="tail_fin">
+    <visual>
+      <geometry>
+        <box size="0.15 0.02 0.3"/>
+      </geometry>
+      <material name="fin_color">
+        <color rgba="0.4 0.5 0.6 1.0"/>
+      </material>
+    </visual>
+  </link>
+  <joint name="tail_fin_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="tail_fin"/>
+    <origin xyz="-1.0 0 0.15" rpy="0 0 0"/>
+  </joint>
+
+  <!-- IMU sensor frame -->
+  <link name="imu_link"/>
+  <joint name="imu_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <!-- DVL sensor frame (bottom-mounted, looking down) -->
+  <link name="dvl_link"/>
+  <joint name="dvl_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="dvl_link"/>
+    <origin xyz="-0.3 0 0.2" rpy="3.14159 0 0"/>
+  </joint>
+
+  <!-- Depth sensor frame -->
+  <link name="depth_link"/>
+  <joint name="depth_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="depth_link"/>
+    <origin xyz="0 0 -0.2" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Thruster T0: rear-right -->
+  <link name="thruster_t0_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.05" length="0.1"/>
+      </geometry>
+      <material name="thruster_color">
+        <color rgba="0.8 0.2 0.2 1.0"/>
+      </material>
+    </visual>
+  </link>
+  <joint name="thruster_t0_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="thruster_t0_link"/>
+    <origin xyz="-0.8 0.25 0" rpy="0 1.5708 0"/>
+  </joint>
+
+  <!-- Thruster T1: rear-left -->
+  <link name="thruster_t1_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.05" length="0.1"/>
+      </geometry>
+      <material name="thruster_color">
+        <color rgba="0.8 0.2 0.2 1.0"/>
+      </material>
+    </visual>
+  </link>
+  <joint name="thruster_t1_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="thruster_t1_link"/>
+    <origin xyz="-0.8 -0.25 0" rpy="0 1.5708 0"/>
+  </joint>
+
+  <!-- Thruster T2: vertical front -->
+  <link name="thruster_t2_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.04" length="0.08"/>
+      </geometry>
+      <material name="thruster_color">
+        <color rgba="0.8 0.2 0.2 1.0"/>
+      </material>
+    </visual>
+  </link>
+  <joint name="thruster_t2_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="thruster_t2_link"/>
+    <origin xyz="0.5 0 0.2" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Thruster T3: vertical rear -->
+  <link name="thruster_t3_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.04" length="0.08"/>
+      </geometry>
+      <material name="thruster_color">
+        <color rgba="0.8 0.2 0.2 1.0"/>
+      </material>
+    </visual>
+  </link>
+  <joint name="thruster_t3_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="thruster_t3_link"/>
+    <origin xyz="-0.5 0 0.2" rpy="0 0 0"/>
+  </joint>
+
+</robot>
